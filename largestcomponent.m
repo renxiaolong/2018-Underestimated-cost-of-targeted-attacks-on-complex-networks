@@ -1,0 +1,41 @@
+function [B] = largestcomponent(A)
+%largestcomponent compute the gcc of a network, and return the id of the
+%nodes that belongs to gcc
+% breadth-first search method
+
+n=length(A);
+
+for i=1:n
+    mz{i}=find(A(i,:)); % find and save all the elements in each row, mz: 1*n 
+end
+
+x(1:n)=0;  % save the component id
+z=0;
+k=0;
+for i=1:n 
+    if x(i)==0; % if this node does not belong to any component
+        z=z+1;
+        clear v
+        v(1)=i;
+        while nnz(v)>0
+                    x(v(1))=z;
+                    k=union(k,v(1));
+                    b=setdiff(mz{v(1)},k);
+                    v=setdiff(v,v(1));
+                    v=union(v,b);         
+        end
+    end
+end
+
+c(1:max(x))=0;
+for i=1:max(x)
+    c(i)=length(find(x==i)); 
+end
+
+cm=find(c==max(c));
+    
+B=find(x==cm(1));
+
+end
+                    
+        
